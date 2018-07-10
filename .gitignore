@@ -1,0 +1,5 @@
+*.pyc
+dicas.txt
+*.py_prod
+*.db
+.idea/
