@@ -17,7 +17,7 @@ def setup():
 
     if not Usuario.query.filter(Usuario.username == 'usuario2').first():
         user = Usuario(
-            username='usuario2'
+            username='usuario2' 
         )
 
         db.session.add(user)
