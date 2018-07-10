@@ -1,4 +1,65 @@
-$( '.actions' ).hide();
+// ################ Listas #####################
+$( '.action' ).hide();
+$( '#action-delete-items' ).hide();
+
+$( 'li' ).hover(function(){
+
+    $( this ).find( ".action" ).css("display", "inline-block");
+    $( this ).find( ".price" ).css("display", "none");
+
+},function(){
+
+    $( this ).find(".action").css("display", "none");
+    $( this ).find(".price").css("display", "inline-block");
+
+});
+
+$( 'li' ).click(function(e){
+
+    e.stopImmediatePropagation();
+
+    var temSelecao = false;
+
+    $( this ).each(function(i, element){
+
+        if($( element ).hasClass( "active" )){
+
+            $( element ).removeClass( "active" );
+            console.log("remove classe");
+            return false;
+
+        }else{
+            $( element ).addClass( "active" );
+            console.log("adiciona classe");
+            return false;
+
+        }
+
+    });
+
+    $( "li" ).each(function(i, element){
+
+        if( $( element ).hasClass("active") ){
+
+            temSelecao = true;
+
+        }
+
+    });
+
+    if (!temSelecao){
+
+        $("#action-delete-items").css("display", "none");
+
+    }
+    else{
+
+        $("#action-delete-items").css("display", "inline-block");
+
+    }
+
+});
+
 $(function(){
     if($('#tipo_parcela-0').is(':checked')){
         desabilitaCampo(false);
