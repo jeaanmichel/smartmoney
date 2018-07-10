@@ -1,0 +1,25 @@
+body{
+    background-color: #000a12;
+    color: #eceff1;
+}
+
+ul li.list-group-item{
+    background-color: #000a12;
+    border: 1px solid rgba(193,213,224,.125); /* #C1D5E0 */
+}
+
+.control-label{
+    color: #212121;
+}
+
+.modal-title{
+    color: #212121;
+}
+
+.radio label{
+    color: #212121;
+}
+
+.modal-body{
+    color: #212121;
+}

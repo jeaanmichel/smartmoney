@@ -1,0 +1,183 @@
+{% extends "template.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Criar um álbum{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="#" data-toggle="modal" data-target="#addModal">Nova Movimentação</a>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Receitas</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <div class="pull-right">
+                        <span class="price text-success">$12</span>
+                    </div>
+                    <div class="actions pull-right">
+                        <span data-feather="file"></span>
+                        <span data-feather="file"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <div class="price pull-right">
+                        <span class="text-success">$12</span>
+                    </div>
+                    <div class="actions pull-right">
+                        <span data-feather="file"></span>
+                        <span data-feather="file"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Despesas</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-danger">$12</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body">
+                <ul id="ulist" class="list-group">
+                    {% for usuario in usuarios %}
+                    <li class="list-group-item">
+                        <div class="float-left">
+                            <label>
+                                {{ usuario.username }}
+                            </label>
+                        </div>
+                        <div class="float-right action-buttons">
+                            <a href="#" onclick="Edit(this)" data-id="{{ usuario.id }}" data-toggle="modal" data-target="#editModal">Editar</a>
+                            <a href="#" data-id="{{ usuario.id }}" onclick="ConfirmDelete(this)">Deletar</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editModalLabel">Update Blog</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="username" class="control-label">Username</label>
+                                <input type="text" class="form-control" id="username">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="btnUpdate" type="button" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align:center;">
+                    <h4 class="modal-title" style="color:red;" id="deleteModalLabel">You are going to Delete this forever !!</h4>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="Delete()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align:center;">
+                    <h4 class="modal-title" id="addModalLabel">Adicionar</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                {{ wtf.form_field(form.nome_compra) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ wtf.form_field(form.valor_compra) }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ wtf.form_field(form.data_compra) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ wtf.form_field(form.tipo_movimentacao, class="custom-select d-block w-100") }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ wtf.form_field(form.tipo_compra, class="custom-select d-block w-100") }}
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <h4 class="mb-3">Parcelamento</h4>
+                        <div class="d-block my-3">
+                            <div class="custom-radio">
+                                {{ wtf.form_field(form.tipo_parcela, class="custom-control-input") }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ wtf.form_field(form.total_parcelas) }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ wtf.form_field(form.valor_parcela) }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary">Salvar e continuar</button>
+                    <button type="button" class="btn btn-primary">Salvar e sair</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+{% endblock %}
