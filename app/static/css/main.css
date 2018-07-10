@@ -23,3 +23,14 @@ ul li.list-group-item{
 .modal-body{
     color: #212121;
 }
+
+ul li.list-group-item:hover{
+    background-color: #37474f;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #37474f;
+    border-color: #37474f;
+}
